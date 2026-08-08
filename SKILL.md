@@ -196,8 +196,8 @@ security-test-kit/
 ### 为新项目配置
 
 ```bash
-# 1. 复制工具包
-cp -r security-test-kit /path/to/new-project/
+# 1. 克隆工具包
+git clone https://github.com/<your-username>/security-test-kit.git /path/to/new-project/security-test-kit
 
 # 2. 放入资料（可选）
 cp api-docs.md /path/to/new-project/security-test-kit/materials/

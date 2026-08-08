@@ -33,8 +33,8 @@
 ## 快速开始
 
 ```bash
-# 复制到你的项目
-cp -r security-test-kit /path/to/your-project/
+# 克隆到你的项目
+git clone https://github.com/<your-username>/security-test-kit.git /path/to/your-project/security-test-kit
 
 # 放入设计文档（可选）
 cp api-docs.md /path/to/your-project/security-test-kit/materials/
