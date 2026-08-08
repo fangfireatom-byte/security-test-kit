@@ -197,7 +197,7 @@ security-test-kit/
 
 ```bash
 # 1. 克隆工具包
-git clone https://github.com/<your-username>/security-test-kit.git /path/to/new-project/security-test-kit
+git clone https://github.com/fangfireatom-byte/security-test-kit.git /path/to/new-project/security-test-kit
 
 # 2. 放入资料（可选）
 cp api-docs.md /path/to/new-project/security-test-kit/materials/

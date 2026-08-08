@@ -34,7 +34,7 @@
 
 ```bash
 # 克隆到你的项目
-git clone https://github.com/<your-username>/security-test-kit.git /path/to/your-project/security-test-kit
+git clone https://github.com/fangfireatom-byte/security-test-kit.git /path/to/your-project/security-test-kit
 
 # 放入设计文档（可选）
 cp api-docs.md /path/to/your-project/security-test-kit/materials/
