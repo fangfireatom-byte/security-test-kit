@@ -36,8 +36,8 @@
 # 克隆到你的项目
 git clone https://github.com/fangfireatom-byte/security-test-kit.git /path/to/your-project/security-test-kit
 
-# 放入设计文档（可选）
-cp api-docs.md /path/to/your-project/security-test-kit/materials/
+# 放入设计文档（可选，多份交叉参考效果更好）
+cp api-docs.md architecture.pdf db-schema.md /path/to/your-project/security-test-kit/materials/
 
 # 清理示例产出
 rm -rf /path/to/your-project/security-test-kit/output/*

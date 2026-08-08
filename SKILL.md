@@ -199,8 +199,8 @@ security-test-kit/
 # 1. 克隆工具包
 git clone https://github.com/fangfireatom-byte/security-test-kit.git /path/to/new-project/security-test-kit
 
-# 2. 放入资料（可选）
-cp api-docs.md /path/to/new-project/security-test-kit/materials/
+# 2. 放入资料（可选，多份交叉参考效果更好）
+cp api-docs.md architecture.pdf /path/to/new-project/security-test-kit/materials/
 
 # 3. 清理上次产出
 rm /path/to/new-project/security-test-kit/output/*
