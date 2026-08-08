@@ -1,0 +1,16 @@
+# 测试产出（每个项目独立，不提交到仓库）
+output/*
+!output/.gitkeep
+
+# 项目资料（每个项目独立，不提交到仓库）
+materials/*
+!materials/.gitkeep
+!materials/README.md
+
+# 系统文件
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+.obsidian/
+.claude/
