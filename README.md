@@ -65,6 +65,8 @@ security-test-kit/
 │   ├── test-report.md
 │   └── executive-summary.md
 └── output/                   # 测试产出（按项目生成，不提交）
+    ├── README.md              # 归档规则说明
+    └── archive/               # 历史报告（新一轮测试时自动归档）
 ```
 
 ---

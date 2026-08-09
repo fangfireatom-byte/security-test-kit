@@ -1,6 +1,10 @@
 # 测试产出（每个项目独立，不提交到仓库）
 output/*
 !output/.gitkeep
+!output/README.md
+!output/archive/
+output/archive/*
+!output/archive/.gitkeep
 
 # 项目资料（每个项目独立，不提交到仓库）
 materials/*
