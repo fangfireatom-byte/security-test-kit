@@ -62,15 +62,12 @@ security-test-kit/
 ├── LICENSE                   # MIT
 ├── SKILL.md                  # Agent 行为指令（核心）
 ├── materials/                # 设计文档（按项目放，不提交）
-│   ├── README.md
-│   └── .gitkeep
+│   └── README.md
 ├── templates/                # 报告模板
 │   ├── test-plan.md
 │   ├── test-report.md
 │   └── executive-summary.md
-├── examples/                 # 匿名化案例
 └── output/                   # 测试产出（按项目生成，不提交）
-    └── .gitkeep
 ```
 
 ---
