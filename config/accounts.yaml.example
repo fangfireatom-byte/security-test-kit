@@ -1,0 +1,43 @@
+# 测试账户模板 —— 复制为 config/accounts.yaml 并填入真实测试账户（本文件不入库）
+# 用例 params 里的占位 <TOKEN_A>/<UID_A>/<TARGET_ID_B> 等由此注入
+# 多端平台（小程序/桌面/后台）认证方式不同，可按端组织账户，如：mp: {...}, desktop: {...}, admin: {...}（参考，可自定）
+
+# ── 占位符定义（Agent 执行用例时替换 params 中的占位）────
+placeholders:
+  BASE: "https://example.com"             # 目标根地址
+  LOGIN_ENDPOINT: "/api/login"
+  LOGOUT_ENDPOINT: "/api/logout"
+  PROTECTED_ENDPOINT: "/api/user/info"
+  PRIVILEGED_ENDPOINT: "/api/admin/users"
+  SENSITIVE_CONFIG_ENDPOINT: "/api/config"
+  ENDPOINT: "/api/resource/detail"       # 通用用例默认端点
+  # 字段名占位（不同项目 header/param 名不同）
+  TOKEN_HEADER: "token"
+  UID_HEADER: "uid"
+  USERNAME_FIELD: "username"
+  PASSWORD_FIELD: "password"
+  ID_PARAM: "id"
+  KEYWORD_PARAM: "keyword"
+
+# ── 账户 A（己方/低权）─────────────────────────────────
+account_a:
+  uid: "<填入>"
+  token: "<填入>"
+  phone: "<填入>"
+  role: "normal"
+
+# ── 账户 B（被越权目标，与 A 不同）──────────────────────
+account_b:
+  uid: "<填入>"
+  token: "<填入>"
+  phone: "<填入>"          # 用于校验响应不含他人手机号
+  piis: ["<填入手机号>", "<填入身份证号>"]
+  resource_ids: ["<他人资源ID1>", "<他人资源ID2>"]
+  TOKEN_ID_B: "<填入他人资源ID>"
+
+# ── 越权探针用 ─────────────────────────────────────────
+  TOKEN_A: "<account_a 的 token>"
+  UID_A: "<account_a 的 uid>"
+  TARGET_ID_B: "<account_b 的资源ID>"
+  TOKEN_LOW_PRIV: "<低权账户 token>"
+  UID_LOW_PRIV: "<低权账户 uid>"

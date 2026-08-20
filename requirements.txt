@@ -1,0 +1,5 @@
+# security-test-kit 依赖
+# 仅 tools/sign.py 需要 pycryptodome（处理签名/加密的密码学运算）
+# 无签名网关的项目不需要安装任何依赖（纯 Markdown/YAML/JSON，Agent 直接驱动）
+pycryptodome>=3.20.0
+pyyaml>=6.0

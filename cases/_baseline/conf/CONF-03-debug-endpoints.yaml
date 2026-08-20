@@ -1,0 +1,27 @@
+id: CONF-03
+title: 调试/管理端点不暴露（Swagger/Actuator/Druid/.git）
+layer: baseline
+category: conf
+endpoint: <ENDPOINT>
+method: GET
+auth: none
+sign_layer: false
+mutating: false
+params: {}
+headers_extra: {}
+# 对一组常见调试路径逐一探测，每条写一个 expected
+expected_safe:
+  paths_403_or_404:
+    - /v2/api-docs
+    - /swagger-ui.html
+    - /swagger-resources
+    - /actuator
+    - /actuator/env
+    - /actuator/heapdump
+    - /druid/index.html
+    - /druid/datasource.json
+    - /.git/config
+    - /WEB-INF/web.xml
+redlines: { max_rate: "1/5s", max_total: 10 }
+history: []
+notes: 任一返回 200 且含敏感数据即 unsafe；返回登录页(302)算可接受但建议加 IP 白名单

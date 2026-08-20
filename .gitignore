@@ -17,3 +17,20 @@ Thumbs.db
 *.swo
 .obsidian/
 .claude/
+
+# 项目配置（真实值不入库，仅 .example 模板入库）
+config/accounts.yaml
+config/target.yaml
+config/signer.yaml
+
+# 用例库：项目专属用例含真实参数，不入库；_baseline 通用集与模板入库
+cases/*
+!cases/_baseline/
+!cases/000-template.yaml
+
+# 签名密钥（从前端 JS 提取，按项目，不入库）
+materials/keys/
+
+# Python
+__pycache__/
+*.pyc

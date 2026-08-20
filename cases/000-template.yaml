@@ -1,0 +1,26 @@
+# 用例示例（参考，非强制模板）
+
+# 字段可增删、结构可改。真正的「必须」只有两点：
+#   1) 每条用例自带「预期安全态」的判定标准（判 safe/unsafe 的依据，表达方式由你定）
+#   2) history 记录历轮状态与证据引用（这是回归 diff 的基础，见 SKILL.md §1.2）
+# 其余字段按你的目标系统自行设计。
+
+id: IDOR-01                    # 唯一标识（命名规则自定）
+title: 越权读取他人资源
+category: idor                 # 维度归类，可按你的维度体系改
+endpoint: /api/resource/detail
+method: GET
+auth: required                 # 本用例是否需要账户（none / required / 角色）
+params:
+  id: "<TARGET_ID_B>"          # 占位，运行时替换
+
+# 判定标准：本用例判 safe 的依据，用你习惯的方式表达（正则/状态码/意图描述均可）。
+# 关键：同一条用例跨轮用同一标准，结果才能 diff。
+expect_safe: "未越权：响应不含他人数据（data 为 null 或返回拒绝）"
+judge:                         # 示例——可换成你自己的判定写法
+  body_not_contains: ["<OWNER_PHONE>"]
+
+history:                       # ★ 核心：历轮状态，回归的基础
+  - round: 0
+    status: not_found          # 状态集可自定义（如 found/fixed/regression/new）
+    evidence: evidence/round-0/IDOR-01-001.json

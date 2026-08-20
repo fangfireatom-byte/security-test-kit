@@ -1,0 +1,20 @@
+id: AUTH-01
+title: 登录失败锁定 + 无用户名枚举侧信道
+layer: baseline
+category: auth
+endpoint: <LOGIN_ENDPOINT>
+method: POST
+auth: none
+sign_layer: false
+mutating: false
+params:
+  <USERNAME_FIELD>: "<TEST_ACCOUNT>"
+  <PASSWORD_FIELD>: "wrong-password-<SEQ>"
+expected_safe:
+  # 关键：不存在账户与存在账户的响应应不可区分；连续失败应触发锁定/限速
+  body_not_contains: ["user does not exist", "account not found", "用户不存在"]
+  response_uniform: true           # 存在/不存在账户响应体应一致
+  lockout_after: 3                 # 真实账户失败 N 次应锁定
+redlines: { max_rate: "1/5s", max_total: 4 }   # 严格低速，不超 4 次（避免账户 DoS）
+history: []
+notes: 严禁暴破口令；本用例仅验证锁定与防枚举机制；锁定不得暴露账户存在性

@@ -1,0 +1,23 @@
+id: IDOR-01
+title: 越权探针模式（A 账户 token 访问 B 账户资源标识）
+layer: baseline
+category: idor
+endpoint: <ENDPOINT>
+method: GET
+auth: required
+sign_layer: false
+mutating: false
+# 用 tokenA（己方）访问 id=属于 B 的资源
+params:
+  <ID_PARAM>: "<TARGET_ID_B>"
+headers_extra:
+  <TOKEN_HEADER>: "<TOKEN_A>"
+  <UID_HEADER>: "<UID_A>"
+expected_safe:
+  judge_intent: "用 A token 访问 B 资源，服务端按 token 的 uid 隔离，不得返回 B 的数据"
+  status_in: [200, 403]        # Agent 按项目校准
+  body_not_contains: ["<OWNER_B_PII>"]
+  body_regex: ""               # Agent 按项目响应格式填（如该项目用 data:null 或特定拒绝码/提示语表示拒绝）
+redlines: { max_rate: "1/5s", max_total: 3 }
+history: []
+notes: 通用越权探针；对 list/detail/update/delete 套用同一模式；服务端应按 token 的 uid 隔离

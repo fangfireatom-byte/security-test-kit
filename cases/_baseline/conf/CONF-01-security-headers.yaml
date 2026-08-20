@@ -1,0 +1,18 @@
+id: CONF-01
+title: 安全响应头齐全（CSP/X-Frame-Options/X-Content-Type-Options/HSTS）
+layer: baseline
+category: conf
+endpoint: <BASE>
+method: GET
+auth: none
+sign_layer: false
+mutating: false
+params: {}
+headers_extra: {}
+expected_safe:
+  headers_present: ["content-security-policy", "x-frame-options", "x-content-type-options"]
+  headers_contains:
+    strict-transport-security: "max-age=31536000; includeSubDomains"
+redlines: { max_rate: "1/5s", max_total: 1 }
+history: []
+notes: HSTS 须含 includeSubDomains；CSP 不应为空或 report-only

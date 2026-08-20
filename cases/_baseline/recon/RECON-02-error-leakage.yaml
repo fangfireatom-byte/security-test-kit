@@ -1,0 +1,25 @@
+id: RECON-02
+title: 异常响应不泄露堆栈/SQL/框架指纹
+layer: baseline
+category: recon
+endpoint: <ENDPOINT>
+method: GET
+auth: none
+sign_layer: false
+mutating: false
+# 传非法参数触发异常，看响应是否泄露内部信息
+params:
+  page: 0
+  size: -1
+expected_safe:
+  body_not_contains:
+    - "SQLSyntaxErrorException"
+    - "SQLException"
+    - "stacktrace"
+    - "at com."
+    - "at org.springframework"
+    - "Whitelabel Error Page"
+    - "java.lang.NullPointerException"
+redlines: { max_rate: "1/5s", max_total: 2 }
+history: []
+notes: 生产环境任何报错不得带堆栈/SQL/框架指纹；应返回通用 JSON 错误页

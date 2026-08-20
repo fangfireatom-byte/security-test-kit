@@ -1,0 +1,17 @@
+id: RECON-01
+title: 首页/根路径响应头指纹（版本/安全头/指纹）
+layer: baseline
+category: recon
+endpoint: <BASE>
+method: GET
+auth: none
+sign_layer: false
+mutating: false
+params: {}
+headers_extra: {}
+expected_safe:
+  # 不要求必须安全（这是指纹基线用例），但记录以供 round-N 漂移检测
+  record_only: true
+redlines: { max_rate: "1/5s", max_total: 1 }
+history: []
+notes: 本用例主要用于冻结 fingerprint.txt；round-N 比对响应头/版本变化以检测环境漂移

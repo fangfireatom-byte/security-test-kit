@@ -1,0 +1,24 @@
+id: URA-01
+title: 未授权接口不返回敏感数据（API Key/密码哈希/PII）
+layer: baseline
+category: ura
+endpoint: <SENSITIVE_CONFIG_ENDPOINT>
+method: GET
+auth: none
+sign_layer: false
+mutating: false
+params: {}
+headers_extra: {}
+expected_safe:
+  judge_intent: "未鉴权访问敏感配置/详情类接口，响应不得含密钥/哈希/盐/PII；应返回拒绝或空数据"
+  status_in: [401, 403]         # Agent 按项目实际拒绝码校准
+  body_not_contains:           # 通用敏感标记；Agent 按项目补充具体字段名（如该项目特有的盐字段）
+    - "sk-"                    # 第三方 API Key 前缀
+    - "password"
+    - "apiKey"
+    - "secret"
+    - "<OWNER_PHONE>"
+  body_regex: ""               # Agent 按项目响应格式填
+redlines: { max_rate: "1/5s", max_total: 2 }
+history: []
+notes: 配置类/详情类接口未鉴权返回密钥/哈希/盐/手机号即高危；响应应最小化脱敏

@@ -1,0 +1,25 @@
+id: AUTH-02
+title: 登出/改密后旧 token 立即失效
+layer: baseline
+category: auth
+endpoint: <PROTECTED_ENDPOINT>
+method: GET
+auth: required
+sign_layer: false
+mutating: false
+# 多步骤用例：用 tokenA 调登出 → 再用同一 tokenA 调受保护接口
+steps:
+  - action: call_logout
+    endpoint: <LOGOUT_ENDPOINT>
+    method: POST
+    token: "<TOKEN_A>"
+  - action: replay_old_token
+    endpoint: <PROTECTED_ENDPOINT>
+    method: GET
+    token: "<TOKEN_A>"
+expected_safe:
+  status_in: [401, 403]
+  body_not_contains: ["<OWNER_DATA>"]
+redlines: { max_rate: "1/5s", max_total: 2 }
+history: []
+notes: 改密场景同理（调 updatePwd 后旧 token 应失效）；登出/改密后旧 token 可用即高危

@@ -1,0 +1,19 @@
+id: CONF-02
+title: CORS 无反射 + 不携带凭据
+layer: baseline
+category: conf
+endpoint: <BASE>
+method: GET
+auth: none
+sign_layer: false
+mutating: false
+params: {}
+headers_extra:
+  Origin: https://evil.example.com
+expected_safe:
+  headers_absent: ["access-control-allow-credentials"]
+  headers_not_contains:
+    access-control-allow-origin: "evil.example.com"
+redlines: { max_rate: "1/5s", max_total: 1 }
+history: []
+notes: 反射 Origin + ACAO + ACAC=true = 高危；严格白名单不应回显任意 Origin

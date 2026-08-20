@@ -1,0 +1,18 @@
+id: INJ-01
+title: 通用注入探针（'/"/\%/时间差，非破坏性）
+layer: baseline
+category: inject
+endpoint: <ENDPOINT>
+method: GET
+auth: required
+sign_layer: false
+mutating: false
+# 对每个可注入参数传一组探针，只看响应差异，不发破坏性 payload
+params:
+  <KEYWORD_PARAM>: "x'<SEQ>\"<SEQ>%<SEQ>"
+expected_safe:
+  body_not_contains: ["SQLSyntaxErrorException", "SQLException", "stacktrace", "com.mysql", "org.springframework"]
+  no_time_diff: true          # 时间差探测：带 SLEEP payload 与不带，响应时延应接近
+redlines: { max_rate: "1/5s", max_total: 6 }
+history: []
+notes: 仅布尔/报错/时间盲注探针；禁止 --risk>1、禁止破坏性 payload；sqlmap 须 --risk=1 --level=1 且仅测试账户

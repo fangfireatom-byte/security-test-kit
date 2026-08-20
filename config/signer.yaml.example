@@ -1,0 +1,47 @@
+# 签名/加密机制描述（参考示例，非强制）
+# 仅供 tools/sign.py 参考；字段可增删、算法可扩展。Agent 也可完全弃用本文件与 sign.py，自行写签名脚本。
+# 复制为 config/signer.yaml 并按目标项目填写；无签名项目设 enabled: false
+
+enabled: false                      # true=有签名/加密网关层；false=无，Agent 直接发请求
+
+# ── 签名 ──────────────────────────────────────────────
+sign:
+  algorithm: md5_concat             # md5_concat / hmac_sha256 / jwt / none / custom
+  # 签名拼接公式，{var} 占位。常见字段：ts/nonce/uid/token/method/path/payload + 任意项目自定义字段
+  formula: "{ts}-{nonce}|{method}|{path}|{payload}"
+  fields:
+    ts:    { from: header, name: timestamp, gen: now_ms }       # gen: now_ms / random_base36_N / random_upper_N
+    nonce: { from: header, name: nonce,      gen: random_base36_6 }
+    uid:   { from: header, name: uid,        optional: true }
+    token: { from: header, name: token,      optional: true }
+  secret: none                      # none / env:SIGNER_SECRET / file:materials/keys/signer_secret
+  # hmac_sha256 用 secret；md5_concat 通常 secret:none（如项目无密钥拼接）
+
+# ── 请求体加密 ─────────────────────────────────────────
+encrypt:
+  enabled: false
+  type: aes_ecb                     # aes_ecb / aes_gcm / none
+  key_size: 16                      # 16(AES-128) / 32(AES-256)
+  key_transport: none               # rsa_wrap(AES key 用 RSA 公钥包裹) / direct / none
+  rsa_pubkey_file: materials/keys/pub.pem   # 从公开前端 JS 提取的公钥
+  # 若 type=none：不加密 body，直接明文
+
+# ── 响应解密 ───────────────────────────────────────────
+response_decrypt:
+  enabled: false
+  aes_key_header: Aes-Key          # 响应头里返回 AES key 的字段名
+  method: none                     # rsa_pub_decrypt(用公钥解密服务端私钥加密的key) / aes_shared / none
+
+# ── 设备指纹/常量（项目自定义，从 JS 提取）──────────────
+constants:
+  app_type: ""
+  device_type: ""
+  brand: ""
+  os: ""
+  client_key_id: ""
+  server_key_id: ""
+
+# ── 白名单端点（不要求 uid/token 的登录类接口）──────────
+whitelist_paths: []
+  # - /api/user/login
+  # - /api/user/register

@@ -1,0 +1,21 @@
+id: BFL-01
+title: 垂直越权探针（低权 token 调高权/跨端接口）
+layer: baseline
+category: bfl
+endpoint: <PRIVILEGED_ENDPOINT>
+method: GET
+auth: required
+sign_layer: false
+mutating: false
+# 用普通用户 token 调后台/管理端接口
+params: {}
+headers_extra:
+  <TOKEN_HEADER>: "<TOKEN_LOW_PRIV>"
+  <UID_HEADER>: "<UID_LOW_PRIV>"
+expected_safe:
+  status_in: [401, 403]
+  body_not_contains: ["<ADMIN_DATA>", "<ALL_USERS>", "<ALL_RECORDS>"]
+  body_regex: '("code"\s*:\s*("03"|"403")|"msg"\s*:\s*"(无权限|forbidden|invalid)")'
+redlines: { max_rate: "1/5s", max_total: 3 }
+history: []
+notes: 后端须独立鉴权（不信前端 hiddenMenu）；跨端（小程序 token 调台式机/管理端）同理
